@@ -18,7 +18,7 @@ To get started:
 2. Download and install [Github Desktop](https://desktop.github.com/)
 3. Read [this guide](https://charlesmartin.com.au/blog/2020/08/09/student-project-repository) and keep the [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet) close at hand.
 
-Then the process is as follows (adapted from [here](https://cs.anu.edu.au/courses/comp1720/deliverables/05-major-project/#submission-process)):
+The submission process is as follows (adapted from [here](https://cs.anu.edu.au/courses/comp1720/deliverables/05-major-project/#submission-process)):
 
 1. *fork* this template to your own Github account
 
@@ -26,11 +26,11 @@ Then the process is as follows (adapted from [here](https://cs.anu.edu.au/course
 
 _(if for some reason you'd prefer to keep your repo hidden from the public, you can set it as Private from Settings - "Change visibility". You then need to add me as a collaborator, so I can have access.)_
 
-1. *clone* the repo in your Github Desktop, to download it locally
+2. *clone* the repo in your Github Desktop, to download it locally
 
 ![](assets/clone.gif)
 
-1. *commit* and *push* as you work on your project. The last version pushed to the server before the deadline will count in the evaluation.
+3. *commit* and *push* as you work on your project. The last version pushed to the server before the deadline will count in the evaluation.
 
 ![](assets/commit.gif)
 
@@ -38,7 +38,7 @@ _(if for some reason you'd prefer to keep your repo hidden from the public, you 
 
 1. This readme, filled in. Title, description, usage instructions, useful links. 
 
-You may include images and even [animated gifs](https://www.screentogif.com/), or links to audio/video materials.
+    You may include images and even [animated gifs](https://www.screentogif.com/), or links to audio/video materials.
 
 2. Filled-in [statement of originality](statement-of-originality.yml). Anything not in it will count as 100% your own contribution.
 
