@@ -203,12 +203,12 @@ const tokenize = (text) => {
   return tokens;
 }
 
-export const respond = async (input) => {
+export const respond = async (input, glitchLevel=3) => {
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant that always replies in exactly one sentence. Respond in second person and use many verbs and adjectives' },
+        { role: 'system', content: 'You are a helpful assistant that always replies in exactly one sentence. Respond in second person and use many verbs (preferably not continous form) and adjectives' },
         { role: 'user', content: input }
       ]
     });
@@ -241,7 +241,7 @@ export const respond = async (input) => {
           lastAlteredVerb += 1;
         }
 
-        if (token.type === 'verb' && Math.random() < lastAlteredVerb * 0.30) {
+        if (token.type === 'verb' && Math.random() < lastAlteredVerb * glitchLevel * 0.25) {
           lastAlteredVerb = 0;
           const negated = negateVerbPhrase(token.text);
           await typewriter('...', 300);
@@ -250,7 +250,7 @@ export const respond = async (input) => {
           continue;
         }
 
-        if (Math.random() < 0.15) {
+        if (Math.random() < glitchLevel * 0.15) {
           // Occasionally glitch a word
           const glitchedWord = glitchWord(token.text);
           await typewriter('\b'.repeat(token.text.length));
@@ -258,7 +258,7 @@ export const respond = async (input) => {
           continue;
         }
 
-        if (token.type === 'adjective') {
+        if (token.type === 'adjective' && Math.random() < glitchLevel * 0.4) {
           const leftContext = tokens.slice(0, index).map(t => t.text).join(' ');
           const rightContext = tokens.slice(index + 1).map(t => t.text).join(' ');
           const antonym = await getAntonym(token.text, leftContext, rightContext);
@@ -272,7 +272,7 @@ export const respond = async (input) => {
           continue;
         }
 
-        if (token.type === 'noun' && Math.random() < 0.2) {
+        if (token.type === 'noun' && Math.random() < glitchLevel * 0.2) {
           const randomNoun = nouns[Math.floor(Math.random() * nouns.length)].text;
           await typewriter('...', 300);
           await typewriter('\b'.repeat(token.text.length + 3));
@@ -289,6 +289,7 @@ export const respond = async (input) => {
 }
 
 const startChat = () => {
+  let glitchLevel = 3;
   rl.prompt();
   rl.on('line', async (line) => {
     const input = line.trim();
@@ -297,7 +298,13 @@ const startChat = () => {
       rl.close();
       return;
     }
-    await respond(input);
+    if (input.startsWith('glitch level ')) {
+      glitchLevel = parseInt(input.split(' ')[2]);
+      await typewriter(chalk.yellow(`Setting glitch level to ${glitchLevel}...\n`), 50);
+      rl.prompt();
+      return;
+    }
+    await respond(input, glitchLevel / 4);
     rl.prompt();
   });
 }
