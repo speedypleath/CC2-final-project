@@ -59,6 +59,14 @@ function negateVerbPhrase(phrase) {
     return doc.text().replace('not ', '').replace('not', '');
   }
 
+  // Special case for "never" and "always"
+  if (doc.text().includes('never')) {
+    return doc.text().replace('never', 'always');
+  }
+  if (doc.text().includes('always')) {
+    return doc.text().replace('always', 'never');
+  }
+
   if (verbs.found) {
     const isInfinitive = doc.has('to #Verb');
     const hasAuxiliary = doc.has('#Auxiliary');
