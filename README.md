@@ -1,14 +1,33 @@
-# (Title)
-(Short description)
+# Glitched echo
 
-## (Installing)
-...
+A glitchy command-line chatbot that listens to your input, rewrites it by subtly corrupting or negating its meaning, and responds with a distorted sentence.
 
-## (Usage)
-...
+## Installing
 
-## (Links)
-...
+```bash
+pnpm i
+```
+
+After installing the dependencies, create the .env file and store you OPENAI_API_KEY key.
+
+## Usage
+
+```bash
+# start cli app
+pnpm start
+# test
+pnpm test
+```
+
+CLI commands
+
+* set glitch
+* exit
+
+## Links
+
+* [Datamuse](https://datamuse.com/)
+* [compromise.js](https://compromise.cool/)
 
 # Submitting your project
 
@@ -24,7 +43,7 @@ The submission process is as follows (adapted from [here](https://cs.anu.edu.au/
 
 ![](assets/fork.gif)
 
-_(if for some reason you'd prefer to keep your repo hidden from the public, you can set it as Private from Settings - "Change visibility". You then need to add me as a collaborator, so I can have access.)_
+*(if for some reason you'd prefer to keep your repo hidden from the public, you can set it as Private from Settings - "Change visibility". You then need to add me as a collaborator, so I can have access.)*
 
 2. *clone* the repo in your Github Desktop, to download it locally
 
@@ -36,7 +55,7 @@ _(if for some reason you'd prefer to keep your repo hidden from the public, you 
 
 ## Necessary elements
 
-1. This readme, filled in. Title, description, usage instructions, useful links. 
+1. This readme, filled in. Title, description, usage instructions, useful links.
 
     You may include images and even [animated gifs](https://www.screentogif.com/), or links to audio/video materials.
 
@@ -45,4 +64,3 @@ _(if for some reason you'd prefer to keep your repo hidden from the public, you 
     *(the format is adapted from [here](https://gitlab.cecs.anu.edu.au/comp1720/2018/comp1720-2018-major-project/-/blob/master/statement-of-originality.yml). I'm aware of the irony of using a document taken from [somewhere else](https://cs.anu.edu.au/courses/comp1720/resources/faq/#how-do-i-fill-out-my-statement-of-originality), but it's not plagiarism as long as we mention the source!)*
 
 3. The project itself. Include all the code necessary in order to be able to run the project as per the readme instructions. If large assets are needed, [use Git LFS](https://git-lfs.github.com/) or include download links in your install instructions.
-
