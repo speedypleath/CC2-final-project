@@ -83,8 +83,14 @@ function negateVerbPhrase(phrase) {
     }
 
     const verbText = verbs.text();
+
+    // Continous tense: "is going" → "isn't going"
+    if (verbText.includes('ing')) {
+      return verbText.replace('ing', 'ing not');
+    }
+
     // special case for "is"
-    if (verbText.includes('is')) {
+    if (verbText.split(' ').includes('is')) {
       return verbText.replace('is', 'isn\'t');
     }
 
@@ -194,7 +200,7 @@ export const respond = async (input) => {
     const response = await openai.chat.completions.create({
       model: 'gpt-4',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant that always replies in exactly one sentence.' },
+        { role: 'system', content: 'You are a helpful assistant that always replies in exactly one sentence. Respond in second person and use many verbs and adjectives' },
         { role: 'user', content: input }
       ]
     });
@@ -210,6 +216,12 @@ export const respond = async (input) => {
       await typewriter(chalk.yellow(']'), 10);
     }
     await typewriter('\n');
+
+    const firstWords = raw.split(' ').slice(0, 10).join(' ');
+    await typewriter(chalk.green(firstWords));
+    await typewriter('...', 500);
+    await typewriter('\b'.repeat(firstWords.length + 3));
+    let lastAlteredVerb = 1;
     for (const [index, token] of tokens.entries()) {
         await typewriter(token.text);
         if (index === 0) {
@@ -217,7 +229,12 @@ export const respond = async (input) => {
           continue;
         }
         
-        if (token.type === 'verb' && Math.random() < 0.3) {
+        if (token.type === 'verb') {
+          lastAlteredVerb += 1;
+        }
+
+        if (token.type === 'verb' && Math.random() < lastAlteredVerb * 0.30) {
+          lastAlteredVerb = 0;
           const negated = negateVerbPhrase(token.text);
           await typewriter('...', 300);
           await typewriter('\b'.repeat(token.text.length + 3));
@@ -225,7 +242,7 @@ export const respond = async (input) => {
           continue;
         }
 
-        if (Math.random() < 0.3) {
+        if (Math.random() < 0.15) {
           // Occasionally glitch a word
           const glitchedWord = glitchWord(token.text);
           await typewriter('\b'.repeat(token.text.length));
@@ -247,7 +264,7 @@ export const respond = async (input) => {
           continue;
         }
 
-        if (token.type === 'noun' && Math.random() < 0.3) {
+        if (token.type === 'noun' && Math.random() < 0.2) {
           const randomNoun = nouns[Math.floor(Math.random() * nouns.length)].text;
           await typewriter('...', 300);
           await typewriter('\b'.repeat(token.text.length + 3));
